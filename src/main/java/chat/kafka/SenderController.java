@@ -1,10 +1,12 @@
 package chat.kafka;
 
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.GetMapping;
+
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -24,10 +26,12 @@ public class SenderController {
 
 	@Autowired
 	private ObjectMapper objectMapper;
-	
-	
-	
-	@GetMapping(value = "/producer/{topic}")
+
+	@Autowired
+	private MessageDao msgDao;
+
+
+	@RequestMapping(value = "/producer/{topic}", method = RequestMethod.GET)
 	public String producer(@RequestParam("message") String msg,
 			@RequestParam("senderid") String senderId,
 			@RequestParam("recieverid") String recieverId,
@@ -42,7 +46,18 @@ public class SenderController {
 
 		return "Message sent to the Kafka Topic java_in_use_topic Successfully";
 	}
+	
+	@RequestMapping(value = "/producer/{topic}", method = RequestMethod.GET,produces = "application/json")
+	public List<Message> producer(
+			@RequestParam("senderid") String senderId,
+			@RequestParam("recieverid") String recieverId,
+			@PathVariable String topic) throws JsonProcessingException {
 
+		List<Message> messages = msgDao.findMessageBySenderidAndReceiverid(senderId, recieverId);
 
+		return null;
+	}
+
+	
 
 }

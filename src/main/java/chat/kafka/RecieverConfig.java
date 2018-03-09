@@ -12,6 +12,7 @@ import org.springframework.kafka.annotation.EnableKafka;
 import org.springframework.kafka.config.ConcurrentKafkaListenerContainerFactory;
 import org.springframework.kafka.core.ConsumerFactory;
 import org.springframework.kafka.core.DefaultKafkaConsumerFactory;
+import chat.kafka.KafkaReciever;
 
 
 
@@ -47,9 +48,11 @@ public class RecieverConfig {
 
 	    return factory;
 	  }
+	  
+	  @Bean
+	  public KafkaReciever kafkaReciever(){
+		  return new KafkaReciever();
+	  }
 
-	@Bean
-	public KafkaReciever kafkaReciever(){
-		return new KafkaReciever();
-	}
+	
 }

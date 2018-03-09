@@ -1,6 +1,23 @@
 package chat.kafka;
 
+import javax.persistence.Column;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.SequenceGenerator;
+import javax.persistence.Table;
+
+@Entity
+@Table(name="MESSAGE")
 public class Message {
+	
+	@Id
+	@Column(name = "MESSAGE_ID")
+	@GeneratedValue(strategy=GenerationType.SEQUENCE, generator = "id_Sequence")
+	@SequenceGenerator(name = "id_Sequence", sequenceName = "ID_SEQ")
+	private Integer id;
+	
 	private String senderid;
 	private String receiverid;
 	
